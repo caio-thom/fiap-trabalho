@@ -1,4 +1,4 @@
-name: Deploy da Aplicação Python
+name: Deploy da Aplicação Trabalho FIAP
 
 on:
   push:
@@ -9,22 +9,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checar código
+      - name: Verificar código
         uses: actions/checkout@v3
 
       - name: Configurar Docker
         uses: docker/setup-buildx-action@v2
 
-      - name: Fazer login no DockerHub
+      - name: Login no DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Construir e publicar imagem Docker
+      - name: Buildar e publicar imagem Docker
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest .
-          docker push ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fiap-app:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/fiap-app:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -38,5 +38,5 @@ jobs:
 
       - name: Baixar e executar a imagem Docker
         run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest
-          docker run -d -p 5000:5000 ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest
+          docker pull ${{ secrets.DOCKER_USERNAME }}/fiap-app:latest
+          docker run -d -p 5000:5000 ${{ secrets.DOCKER_USERNAME }}/fiap-app:latest
